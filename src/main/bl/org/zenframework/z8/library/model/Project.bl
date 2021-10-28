@@ -1,0 +1,35 @@
+import org.zenframework.z8.base.table.Table;
+import org.zenframework.z8.base.table.value.Link;
+import org.zenframework.z8.base.table.system.Users;
+import org.zenframework.z8.base.application.Application;
+
+
+[entry]
+[generatable]
+[name "Project"]
+[displayName "Проекты"]
+public class Project extends Table {
+	
+	[displayName "Создатель"]
+	public Users creator;
+	[name "creator"] public Link creatorId = creator;
+	
+	[displayName "Идентификатор"] recordId;
+	[displayName "Наименование"] name;
+	[displayName "Создатель"] creator.name;
+
+	names = { recordId };
+	controls = { name, creator.name };
+	columns = { recordId, name, creator.name };
+	
+	
+	virtual protected void beforeCreate(guid recordId) {
+		super.beforeCreate(recordId);
+		
+		creatorId = Application.user().id;
+	}
+	
+	virtual protected void beforeUpdate(guid recordId) {
+		super.beforeUpdate(recordId);
+	}
+}

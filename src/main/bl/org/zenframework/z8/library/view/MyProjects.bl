@@ -1,0 +1,10 @@
+import org.zenframework.z8.library.model.Project;
+import org.zenframework.z8.base.application.Application;
+
+[entry]
+[displayName "Мои проекты"]
+public class MyProjects extends Project {
+	virtual protected sql_bool where() {
+		return creator.recordId == Application.user().id;
+	}
+}

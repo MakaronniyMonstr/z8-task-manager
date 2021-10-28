@@ -1,0 +1,53 @@
+import org.zenframework.z8.base.table.value.Link;
+import org.zenframework.z8.base.table.value.IntField;
+import org.zenframework.z8.base.table.value.DateField;
+import org.zenframework.z8.base.table.Table;
+import org.zenframework.z8.base.table.system.Users;
+import org.zenframework.z8.base.form.Listbox;
+
+
+[entry]
+[generatable]
+[name "Task"]
+[displayName "Задачи"]
+public class Task extends Table {
+	
+	public Project project;
+	[name "Project"] public Link projectId = project;
+	
+	public Users performer;
+	[name "Performer"] public Link performerId = performer;
+	
+	public TaskStatus status;
+	[name "Status"] public Link statusId = status;
+	statusId.defaultValue = TaskStatus.New;
+	
+	public Journal journal;
+	journal.user.name.editable = true;
+	journal.createdAt.editable = true;
+	
+	[displayName "История"]
+	public Listbox journalList;
+	journalList.query = journal;
+	journalList.link = journal.taskId;
+	journalList.columns = { journal.user.name, journal.createdAt };
+	journalList.colSpan = 4;
+	
+	[displayName "Сложность"]
+	[name "Complexity"] IntField complexity;
+	
+	[displayName "Выполнить до"]
+	[name "PerformBefore"] DateField performBefore;
+	
+	[displayName "Выполнено"]
+	[name "PermormedAt"] DateField permormedAt;
+	
+	[displayName "Проект"] project.name;
+	[displayName "Наименование"] name;
+	[displayName "Описание"] description;
+	
+	names = { name };
+	controls = { name, description, complexity, status.name, project.name, performer.name, performBefore, permormedAt, journalList };
+	columns = { name };
+
+}

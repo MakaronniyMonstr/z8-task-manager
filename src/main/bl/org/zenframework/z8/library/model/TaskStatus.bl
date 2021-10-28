@@ -1,0 +1,18 @@
+import org.zenframework.z8.base.table.Table;
+
+[generatable]
+[name "Task status"]
+[displayName "Статус"]
+public class TaskStatus extends Table {
+	
+	records {
+		[name "Новая"]
+		New = '3E7D2300-4E81-4801-976F-F8137B70BFED';
+		
+		[name "В работе"]
+		Active = 'E204E83F-6E22-4C1A-B279-20EBFD82CCB9';
+		
+		[name "Исполнена"]
+		Completed = '03A8F1A9-05AC-4F24-9767-4FD3551550F8';
+	}
+}
