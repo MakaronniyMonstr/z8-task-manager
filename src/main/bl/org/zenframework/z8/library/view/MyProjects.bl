@@ -5,6 +5,6 @@ import org.zenframework.z8.base.application.Application;
 [displayName "Мои проекты"]
 public class MyProjects extends Project {
 	virtual protected sql_bool where() {
-		return creator.recordId == Application.user().id;
+		return (sql_guid) creator.recordId == Application.user().id;
 	}
 }

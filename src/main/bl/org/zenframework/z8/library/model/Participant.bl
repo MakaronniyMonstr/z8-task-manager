@@ -1,0 +1,24 @@
+import org.zenframework.z8.base.table.Table;
+import org.zenframework.z8.base.table.value.Link;
+import org.zenframework.z8.base.table.system.Users;
+
+
+[entry]
+[generatable]
+[name "Participant"]
+[displayName "Участники"]
+public class Participant extends Table {
+	public Users user;
+	[name "User"]
+	public Link userId = user;
+	
+	public Project project;
+	[name "Project"]
+	public Link projectId = project;
+	
+	[displayName "Проект"] project.name;
+	
+	names = { user.name, project.name };
+	controls = { user.name, project.name };
+	columns = { user.name, project.name };
+}

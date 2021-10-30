@@ -1,11 +1,14 @@
 import org.zenframework.z8.base.table.Table;
 import org.zenframework.z8.base.table.value.Link;
-
+import org.zenframework.z8.base.table.value.StringField;
 import org.zenframework.z8.base.table.system.Users;
+import org.zenframework.z8.base.application.Application;
 
 
+[entry]
 [generatable]
 [name "Journal"]
+[displayName "История"]
 public class Journal extends Table {
 	public Task task;
 	[name "Task"] 
@@ -18,6 +21,16 @@ public class Journal extends Table {
 	[displayName "Ключ"] name;
 	
 	[displayName "Значение"]
-	[name "value"]
+	[name "Value"]
 	public StringField value;
+	
+	[displayName "Изменено"] createdAt;
+	
+	names = { name };
+	controls = { task.name, user.name, name, value };
+	columns = { task.name, user.name, name, value };
+	
+	virtual protected void beforeCreate(guid recordId) {
+		super.beforeCreate(recordId);
+	}
 }

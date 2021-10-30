@@ -1,0 +1,30 @@
+import org.zenframework.z8.library.model.Task;
+import org.zenframework.z8.library.model.TaskStatus;
+import org.zenframework.z8.base.table.value.CountExpression;
+import org.zenframework.z8.base.table.value.IntExpression;
+import org.zenframework.z8.base.table.value.DecimalExpression;
+import org.zenframework.z8.base.table.value.Aggregation;
+
+
+[entry]
+[displayName "Статистика"]
+[presentation "table"]
+public class TaskStatistics extends Task {
+	
+	[displayName "Завершено всего"]
+	public IntExpression countCompleted = ((sql_bool)(statusId == TaskStatus.Completed)).IIF(1, 0);
+	countCompleted.aggregation = Aggregation.Sum;
+	
+	[displayName "Завершено вовремя"]
+	public IntExpression countCompletedInTime = ((sql_bool)(permormedAt <= performBefore && statusId == TaskStatus.Completed)).IIF(1, 0);
+	countCompletedInTime.aggregation = Aggregation.Sum;
+	
+	[displayName "%"]
+	public IntExpression percentageCompletedInTime = (countCompleted == 0).IIF(0, countCompletedInTime * 100 / countCompleted);
+	percentageCompletedInTime.aggregation = Aggregation.None;
+	
+	names = { performer.name };
+	controls = { performer.name };
+	columns = { performer.name, countCompleted, countCompletedInTime, percentageCompletedInTime };
+	groupBy = { performer.name };
+}

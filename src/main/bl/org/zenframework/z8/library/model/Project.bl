@@ -1,7 +1,10 @@
 import org.zenframework.z8.base.table.Table;
 import org.zenframework.z8.base.table.value.Link;
+import org.zenframework.z8.base.table.value.Join;
+import org.zenframework.z8.base.table.value.JoinType;
 import org.zenframework.z8.base.table.system.Users;
 import org.zenframework.z8.base.application.Application;
+import org.zenframework.z8.base.form.Listbox;
 
 
 [entry]
@@ -12,21 +15,51 @@ public class Project extends Table {
 	
 	[displayName "Создатель"]
 	public Users creator;
-	[name "creator"] public Link creatorId = creator;
+	[name "creator"] 
+	public Link creatorId = creator;
+	creatorId.defaultValue = Application.user().id;
+	
+	
+	public Participant participant;
+	
+	[displayName "Участники"]
+	public Listbox participantList;
+	participantList.query = participant;
+	participantList.link = participant.projectId;
+	participantList.columns = { participant.user.name };
+	participantList.colSpan = 4;
+	
+	
+	public Participant participantHolder;
+	public Join participantHolderJoin = class {
+		joinType = JoinType.Left;
+		virtual protected sql_bool expression() {
+			return (sql_guid) container.recordId == container.participantHolder.projectId &&
+					(sql_guid) container.participantHolder.userId != container.creatorId;
+		}
+	};
+	participantHolderJoin = participantHolder;
+	
+	
+	public Task task;
+	
+	[displayName "Задачи"]
+	public Listbox taskList;
+	taskList.query = task;
+	taskList.link = task.projectId;
+	taskList.columns = { task.name, task.performer.name };
 	
 	[displayName "Идентификатор"] recordId;
 	[displayName "Наименование"] name;
 	[displayName "Создатель"] creator.name;
 
-	names = { recordId };
-	controls = { name, creator.name };
+	names = { name };
+	controls = { name, creator.name, participantList };
 	columns = { recordId, name, creator.name };
 	
 	
 	virtual protected void beforeCreate(guid recordId) {
 		super.beforeCreate(recordId);
-		
-		creatorId = Application.user().id;
 	}
 	
 	virtual protected void beforeUpdate(guid recordId) {

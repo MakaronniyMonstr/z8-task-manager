@@ -7,20 +7,20 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
-              <build path="$PROJECT_DIR$/../z8-1.3.0" name="org.zenframework.z8">
+              <build path="$PROJECT_DIR$/../z8-1.3.0.nosync" name="org.zenframework.z8">
                 <projects>
-                  <project path="$PROJECT_DIR$/../z8-1.3.0" />
-                  <project path="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.auth" />
-                  <project path="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.boot" />
-                  <project path="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.compiler" />
-                  <project path="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.interconnection" />
-                  <project path="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.js" />
-                  <project path="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.lang" />
-                  <project path="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.oda.driver" />
-                  <project path="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.resources" />
-                  <project path="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.server" />
-                  <project path="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.servlet" />
-                  <project path="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.webserver" />
+                  <project path="$PROJECT_DIR$/../z8-1.3.0.nosync" />
+                  <project path="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.auth" />
+                  <project path="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.boot" />
+                  <project path="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.compiler" />
+                  <project path="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.interconnection" />
+                  <project path="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.js" />
+                  <project path="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.lang" />
+                  <project path="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.oda.driver" />
+                  <project path="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.resources" />
+                  <project path="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.server" />
+                  <project path="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.servlet" />
+                  <project path="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.webserver" />
                 </projects>
               </build>
             </builds>
@@ -30,18 +30,18 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/../z8-1.3.0" />
-            <option value="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.auth" />
-            <option value="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.boot" />
-            <option value="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.compiler" />
-            <option value="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.interconnection" />
-            <option value="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.js" />
-            <option value="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.lang" />
-            <option value="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.oda.driver" />
-            <option value="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.resources" />
-            <option value="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.server" />
-            <option value="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.servlet" />
-            <option value="$PROJECT_DIR$/../z8-1.3.0/org.zenframework.z8.webserver" />
+            <option value="$PROJECT_DIR$/../z8-1.3.0.nosync" />
+            <option value="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.auth" />
+            <option value="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.boot" />
+            <option value="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.compiler" />
+            <option value="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.interconnection" />
+            <option value="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.js" />
+            <option value="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.lang" />
+            <option value="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.oda.driver" />
+            <option value="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.resources" />
+            <option value="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.server" />
+            <option value="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.servlet" />
+            <option value="$PROJECT_DIR$/../z8-1.3.0.nosync/org.zenframework.z8.webserver" />
             <option value="$PROJECT_DIR$" />
           </set>
         </option>

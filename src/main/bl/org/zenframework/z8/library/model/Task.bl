@@ -4,27 +4,39 @@ import org.zenframework.z8.base.table.value.DateField;
 import org.zenframework.z8.base.table.Table;
 import org.zenframework.z8.base.table.system.Users;
 import org.zenframework.z8.base.form.Listbox;
+import org.zenframework.z8.base.table.value.Field;
+import org.zenframework.z8.base.application.Application;
 
 
 [entry]
 [generatable]
 [name "Task"]
-[displayName "Задачи"]
+[displayName "Все задачи"]
 public class Task extends Table {
 	
 	public Project project;
-	[name "Project"] public Link projectId = project;
+	[name "Project"] 
+	public Link projectId = project;
+	
+	
+	public Users creator;
+	[name "Creator"]
+	public Link creatorId = creator;
+	creatorId.defaultValue = Application.user().id;
+	
 	
 	public Users performer;
-	[name "Performer"] public Link performerId = performer;
+	[name "Performer"] 
+	public Link performerId = performer;
+	
 	
 	public TaskStatus status;
-	[name "Status"] public Link statusId = status;
+	[name "Status"] 
+	public Link statusId = status;
 	statusId.defaultValue = TaskStatus.New;
 	
+	
 	public Journal journal;
-	journal.user.name.editable = true;
-	journal.createdAt.editable = true;
 	
 	[displayName "История"]
 	public Listbox journalList;
@@ -32,6 +44,7 @@ public class Task extends Table {
 	journalList.link = journal.taskId;
 	journalList.columns = { journal.user.name, journal.createdAt };
 	journalList.colSpan = 4;
+	
 	
 	[displayName "Сложность"]
 	[name "Complexity"] IntField complexity;
@@ -42,12 +55,19 @@ public class Task extends Table {
 	[displayName "Выполнено"]
 	[name "PermormedAt"] DateField permormedAt;
 	
+	[displayName "Создатель"] creator.name;
+	[displayName "Исполнитель"] performer.name;
 	[displayName "Проект"] project.name;
 	[displayName "Наименование"] name;
 	[displayName "Описание"] description;
 	
-	names = { name };
-	controls = { name, description, complexity, status.name, project.name, performer.name, performBefore, permormedAt, journalList };
+	
+	names = { project.name, name };
+	controls = { name, description, complexity, project.name, creator.name, performer.name, status.name, performBefore, permormedAt, journalList };
 	columns = { name };
 
+	public void setPerformer(guid recordId) {
+		if (!readRecord(recordId, Field[] { this.projectId, this.performerId })) throw "Запись не существует";
+		
+	}
 }
