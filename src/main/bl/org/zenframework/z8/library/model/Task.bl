@@ -66,16 +66,20 @@ public class Task extends Table {
 	controls = { name, description, complexity, project.name, creator.name, performer.name, status.name, performBefore, performedAt, journalList };
 	columns = { name };
 	
+	virtual protected void beforeDestroy(guid recordId) {
+		super.beforeDestroy(recordId);
+		
+		if (!readRecord(recordId, Field[] { this.creatorId })) 
+			throw "Запись не существует"; 
+			
+		if (this.creatorId.get() != Application.user().id)
+			throw "Задача может быть удалена только владельцем";
+	}
+	
 	virtual protected void beforeUpdate(guid recordId) {
 		super.beforeUpdate(recordId);
 		
-		if (!readRecord(recordId, Field[] { this.projectId, 
-											this.creatorId, 
-											this.performerId,
-											this.statusId,
-											this.description,
-											this.complexity,
-											this.performBefore,
+		if (!readRecord(recordId, Field[] { this.statusId,
 											this.performedAt })) 
 			throw "Запись не существует"; 
 		
@@ -90,6 +94,16 @@ public class Task extends Table {
 	virtual protected void afterUpdate(guid recordId) {
 		super.afterUpdate(recordId);
 		
+		if (!readRecord(recordId, Field[] { this.projectId, 
+											this.creatorId, 
+											this.performerId,
+											this.statusId,
+											this.description,
+											this.complexity,
+											this.performBefore,
+											this.performedAt })) 
+			throw "Запись не существует"; 
+		
 		/* Как получить displayName из Field?
 		for (Field field : this.fields()) {
 			if (field.isChanged()) {
@@ -98,39 +112,34 @@ public class Task extends Table {
 		}
 		*/
 		
+		if (this.description.isChanged()) {
+			log(recordId, "Описание", this.description.get());
+		}
+		else if (this.complexity.isChanged()) {
+			log(recordId, "Сложность", this.complexity.get());
+		}
+		else if (this.performBefore.isChanged()) {
+			log(recordId, "Выполнить до", "" + this.performBefore.get());
+		}
+		else if (this.performedAt.isChanged()) {
+			log(recordId, "Выполнено", "" + this.performedAt.get());
+		}
+		else if (this.statusId.isChanged()) {
+			log(recordId, "Статус", this.status.name.get());
+		}
+		else if (this.performerId.isChanged()) {
+			log(recordId, "Исполнитель", this.performer.name.get());
+		}
+	}
+	
+	private void log(guid recordId, string name, string value) {
 		Journal journal;
+		
 		journal.taskId = recordId;
 		journal.userId = Application.user().id;
+		journal.name = name;
+		journal.value = value;
 		
-		if (this.description.isChanged()) {
-			journal.name = "Описание";
-			journal.value = this.description.get();
-			journal.create();
-		}
-		if (this.complexity.isChanged()) {
-			journal.name = "Сложность";
-			journal.value = this.complexity.get();
-			journal.create();
-		}
-		if (this.performBefore.isChanged()) {
-			journal.name = "Выполнить до";
-			journal.value = "" + this.performBefore.get();
-			journal.create();
-		}
-		if (this.performedAt.isChanged()) {
-			journal.name = "Выполнено";
-			journal.value = "" + this.performedAt.get();
-			journal.create();
-		}
-		if (this.statusId.isChanged()) {
-			journal.name = "Статус";
-			journal.value = this.status.name.get();
-			journal.create();
-		}
-		if (this.performerId.isChanged()) {
-			journal.name = "Исполнитель";
-			journal.value = this.performer.name.get();
-			journal.create();
-		}
+		journal.create();
 	}
 }
