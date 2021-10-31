@@ -11,7 +11,7 @@ import org.zenframework.z8.base.application.Application;
 [entry]
 [generatable]
 [name "Task"]
-[displayName "Все задачи"]
+[displayName "Задачи"]
 public class Task extends Table {
 	
 	public Project project;
@@ -72,22 +72,29 @@ public class Task extends Table {
 		if (!readRecord(recordId, Field[] { this.creatorId })) 
 			throw "Запись не существует"; 
 			
-		if (this.creatorId.get() != Application.user().id)
+		if (creatorId.get() != Application.user().id)
 			throw "Задача может быть удалена только владельцем";
 	}
 	
 	virtual protected void beforeUpdate(guid recordId) {
 		super.beforeUpdate(recordId);
 		
-		if (!readRecord(recordId, Field[] { this.statusId,
-											this.performedAt })) 
+		if (!readRecord(recordId, Field[] { this.statusId, this.creatorId, this.performerId, this.performedAt })) 
 			throw "Запись не существует"; 
 		
-		if (performedAt.isChanged()) {
+		if (!(creatorId.get() == Application.user().id || performerId.get() == Application.user().id))
+			throw "Задача может быть изменена только владельцем или исполнителем";
+		
+		if (performedAt.isChanged())
+			throw "Дата выполнения не может быть изменена вручную";
+		
+		if (statusId.isChanged()) {
 			if (statusId.get() == TaskStatus.Completed) {
-				throw "Дата выполнения задачи не может быть изменена";
+				performedAt = date.now();
 			}
-			statusId = TaskStatus.Completed;
+			else {
+				performedAt = date.Min;
+			}
 		}
 	}
 
@@ -104,15 +111,10 @@ public class Task extends Table {
 											this.performedAt })) 
 			throw "Запись не существует"; 
 		
-		/* Как получить displayName из Field?
-		for (Field field : this.fields()) {
-			if (field.isChanged()) {
-				Application.logInfo("Hi: " + field.primary().toString());
-			}
+		if (this.name.isChanged()) {
+			log(recordId, "Название", this.name.get());
 		}
-		*/
-		
-		if (this.description.isChanged()) {
+		else if (this.description.isChanged()) {
 			log(recordId, "Описание", this.description.get());
 		}
 		else if (this.complexity.isChanged()) {
@@ -120,9 +122,6 @@ public class Task extends Table {
 		}
 		else if (this.performBefore.isChanged()) {
 			log(recordId, "Выполнить до", "" + this.performBefore.get());
-		}
-		else if (this.performedAt.isChanged()) {
-			log(recordId, "Выполнено", "" + this.performedAt.get());
 		}
 		else if (this.statusId.isChanged()) {
 			log(recordId, "Статус", this.status.name.get());

@@ -2,7 +2,6 @@ import org.zenframework.z8.base.table.Table;
 import org.zenframework.z8.base.table.value.Link;
 import org.zenframework.z8.base.table.value.TextField;
 import org.zenframework.z8.base.table.system.Users;
-import org.zenframework.z8.base.application.Application;
 
 
 [entry]
