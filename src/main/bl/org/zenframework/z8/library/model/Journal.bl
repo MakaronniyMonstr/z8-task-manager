@@ -1,6 +1,6 @@
 import org.zenframework.z8.base.table.Table;
 import org.zenframework.z8.base.table.value.Link;
-import org.zenframework.z8.base.table.value.StringField;
+import org.zenframework.z8.base.table.value.TextField;
 import org.zenframework.z8.base.table.system.Users;
 import org.zenframework.z8.base.application.Application;
 
@@ -9,6 +9,7 @@ import org.zenframework.z8.base.application.Application;
 [generatable]
 [name "Journal"]
 [displayName "История"]
+[presentation "table"]
 public class Journal extends Table {
 	public Task task;
 	[name "Task"] 
@@ -22,13 +23,15 @@ public class Journal extends Table {
 	
 	[displayName "Значение"]
 	[name "Value"]
-	public StringField value;
+	public TextField value;
 	
 	[displayName "Изменено"] createdAt;
+	[displayName "Задача"] task.name;
 	
 	names = { name };
-	controls = { task.name, user.name, name, value };
-	columns = { task.name, user.name, name, value };
+	controls = { task.name, user.name, name, value, createdAt };
+	columns = { task.name, user.name, name, value, createdAt };
+	sortFields = { createdAt };
 	
 	virtual protected void beforeCreate(guid recordId) {
 		super.beforeCreate(recordId);

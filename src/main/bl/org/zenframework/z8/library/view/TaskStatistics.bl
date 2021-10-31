@@ -16,7 +16,7 @@ public class TaskStatistics extends Task {
 	countCompleted.aggregation = Aggregation.Sum;
 	
 	[displayName "Завершено вовремя"]
-	public IntExpression countCompletedInTime = ((sql_bool)(permormedAt <= performBefore && statusId == TaskStatus.Completed)).IIF(1, 0);
+	public IntExpression countCompletedInTime = ((sql_bool)(performedAt <= performBefore && statusId == TaskStatus.Completed)).IIF(1, 0);
 	countCompletedInTime.aggregation = Aggregation.Sum;
 	
 	[displayName "%"]
@@ -27,4 +27,8 @@ public class TaskStatistics extends Task {
 	controls = { performer.name };
 	columns = { performer.name, countCompleted, countCompletedInTime, percentageCompletedInTime };
 	groupBy = { performer.name };
+	
+	virtual protected void constructor() {
+		super.constructor();
+	}
 }

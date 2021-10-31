@@ -42,7 +42,7 @@ public class Task extends Table {
 	public Listbox journalList;
 	journalList.query = journal;
 	journalList.link = journal.taskId;
-	journalList.columns = { journal.user.name, journal.createdAt };
+	journalList.columns = { journal.user.name, journal.name, journal.value, journal.createdAt };
 	journalList.colSpan = 4;
 	
 	
@@ -53,7 +53,7 @@ public class Task extends Table {
 	[name "PerformBefore"] DateField performBefore;
 	
 	[displayName "Выполнено"]
-	[name "PermormedAt"] DateField permormedAt;
+	[name "PermormedAt"] DateField performedAt;
 	
 	[displayName "Создатель"] creator.name;
 	[displayName "Исполнитель"] performer.name;
@@ -63,11 +63,74 @@ public class Task extends Table {
 	
 	
 	names = { project.name, name };
-	controls = { name, description, complexity, project.name, creator.name, performer.name, status.name, performBefore, permormedAt, journalList };
+	controls = { name, description, complexity, project.name, creator.name, performer.name, status.name, performBefore, performedAt, journalList };
 	columns = { name };
-
-	public void setPerformer(guid recordId) {
-		if (!readRecord(recordId, Field[] { this.projectId, this.performerId })) throw "Запись не существует";
+	
+	virtual protected void beforeUpdate(guid recordId) {
+		super.beforeUpdate(recordId);
 		
+		if (!readRecord(recordId, Field[] { this.projectId, 
+											this.creatorId, 
+											this.performerId,
+											this.statusId,
+											this.description,
+											this.complexity,
+											this.performBefore,
+											this.performedAt })) 
+			throw "Запись не существует"; 
+		
+		if (performedAt.isChanged()) {
+			if (statusId.get() == TaskStatus.Completed) {
+				throw "Дата выполнения задачи не может быть изменена";
+			}
+			statusId = TaskStatus.Completed;
+		}
+	}
+
+	virtual protected void afterUpdate(guid recordId) {
+		super.afterUpdate(recordId);
+		
+		/* Как получить displayName из Field?
+		for (Field field : this.fields()) {
+			if (field.isChanged()) {
+				Application.logInfo("Hi: " + field.primary().toString());
+			}
+		}
+		*/
+		
+		Journal journal;
+		journal.taskId = recordId;
+		journal.userId = Application.user().id;
+		
+		if (this.description.isChanged()) {
+			journal.name = "Описание";
+			journal.value = this.description.get();
+			journal.create();
+		}
+		if (this.complexity.isChanged()) {
+			journal.name = "Сложность";
+			journal.value = this.complexity.get();
+			journal.create();
+		}
+		if (this.performBefore.isChanged()) {
+			journal.name = "Выполнить до";
+			journal.value = "" + this.performBefore.get();
+			journal.create();
+		}
+		if (this.performedAt.isChanged()) {
+			journal.name = "Выполнено";
+			journal.value = "" + this.performedAt.get();
+			journal.create();
+		}
+		if (this.statusId.isChanged()) {
+			journal.name = "Статус";
+			journal.value = this.status.name.get();
+			journal.create();
+		}
+		if (this.performerId.isChanged()) {
+			journal.name = "Исполнитель";
+			journal.value = this.performer.name.get();
+			journal.create();
+		}
 	}
 }
