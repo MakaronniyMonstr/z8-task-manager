@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11">
-      <module name="org.zenframework.z8.org.zenframework.z8.auth.main" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.auth.test" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.boot.main" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.boot.test" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.compiler.main" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.compiler.test" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.interconnection.main" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.interconnection.test" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.lang.main" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.lang.test" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.oda.driver.main" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.oda.driver.test" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.server.main" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.server.test" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.servlet.main" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.servlet.test" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.webserver.main" target="1.8" />
-      <module name="org.zenframework.z8.org.zenframework.z8.webserver.test" target="1.8" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="11" />
   </component>
 </project>

@@ -1,11 +1,14 @@
 import org.zenframework.z8.library.model.Task;
 import org.zenframework.z8.base.application.Application;
 
+
 [entry]
 [displayName "Мои задачи"]
-public class MyTasks extends Task {
+public class MyTasks extends MyProjectTasks {
 	virtual protected sql_bool where() {
+		guid currentUserId = Application.user().id;
 		
-		return (sql_guid) performer.recordId == Application.user().id;
+		return super.where() && 
+				((sql_guid) performer.recordId == currentUserId || (sql_guid) creator.recordId == currentUserId);
 	}
 }
